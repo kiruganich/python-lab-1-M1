@@ -1,20 +1,32 @@
-from src.power import power_function
-from src.constants import SAMPLE_CONSTANT
+from src.power import evaluate
+import sys
 
+def main():
+    print("Здравствуйте!")
+    print("Консольный калькулятор уровня М1")
+    print("Программа поддерживает следующие операторы: +, -, *, /, //, %, **, скобки, унарные +/-")
+    print("Для выхода введите 'exit' или нажмите Ctrl+C\n")
 
-def main() -> None:
-    """
-    Обязательнная составляющая программ, которые сдаются. Является точкой входа в приложение
-    :return: Данная функция ничего не возвращает
-    """
-
-    target, degree = map(int, input("Введите два числа разделенные пробелом: ").split(" "))
-
-    result = power_function(target=target, power=degree)
-
-    print(result)
-
-    print(SAMPLE_CONSTANT)
+    while True:
+        try:
+            expr = input(">>> ").strip()
+            if expr.lower() in ('exit', 'quit'):
+                print("Выход. До свидания!")
+                break
+            if not expr:
+                continue
+            result = evaluate(expr)
+            if isinstance(result, float) and result.is_integer():
+                print(int(result))
+            else:
+                print(result)
+        except ValueError as e:
+            print("Ошибка:", e)
+        except KeyboardInterrupt:
+            print("\nВыход.  До свидания!")
+            break
+        except Exception as e:
+            print("Неизвестная ошибка:", e)
 
 if __name__ == "__main__":
     main()
