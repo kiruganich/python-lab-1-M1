@@ -54,5 +54,17 @@ def test_power_and_floor_div(self):
     self.assertEqual(evaluate("10%3"), 1)
     self.assertEqual(evaluate("2**3**2"), 512)
 
+def test_floor_div_and_mod_with_floats(self):
+    self.assertEqual(evaluate("8.0 // 2"), 4.0)
+    self.assertEqual(evaluate("10 % 3.0"), 1.0)
+    self.assertEqual(evaluate("(9 / 3) // 1"), 3.0)
+    self.assertEqual(evaluate("7.0 % 2"), 1.0)
+
+def test_floor_div_mod_non_integer_error(self):
+    with self.assertRaises(ValueError):
+        evaluate("7.5 // 2")
+    with self.assertRaises(ValueError):
+        evaluate("10 % 3.2")
+
 if __name__ == '__main__':
     unittest.main()

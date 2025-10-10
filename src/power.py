@@ -4,6 +4,9 @@ from src import constants
 
 Token = Union[float, str]
 
+def is_integer_value(x):
+    return isinstance(x, int) or (isinstance(x, float) and x.is_integer())
+
 def tokenize(expr: str) -> List[Token]:
     # Убираем пробелы (или можно оставить \s+ в регулярке)
     expr = expr.replace(' ', '')
@@ -110,16 +113,20 @@ class Parser:
                     raise ValueError(constants.ERROR_DIVISION_BY_ZERO)
                 left /= right
             elif op == '//':
-                if not (isinstance(left, int) and isinstance(right, int)):
+                if not (is_integer_value(left) and is_integer_value(right)):
                     raise ValueError("Деление без остатка допустимо только для целых чисел")
                 if right == 0:
                     raise ValueError(constants.ERROR_DIVISION_BY_ZERO)
+                left = int(left)
+                right = int(right)
                 left //= right
             elif op == '%':
-                if not (isinstance(left, int) and isinstance(right, int)):
+                if not (is_integer_value(left) and is_integer_value(right)):
                     raise ValueError("Нахождение остатка допустимо только для целых чисел")
                 if right == 0:
                     raise ValueError(constants.ERROR_DIVISION_BY_ZERO)
+                left = int(left)
+                right = int(right)
                 left %= right
         return left
 
