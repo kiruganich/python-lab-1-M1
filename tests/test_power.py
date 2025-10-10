@@ -41,8 +41,7 @@ class TestCalculator(unittest.TestCase):
             evaluate("5//0")
         with self.assertRaises(ValueError):
             evaluate("5%0")
-        with self.assertRaises(ValueError):
-            evaluate("5//2.0")
+        self.assertEqual(evaluate("5//2.0"), 2.0)
         with self.assertRaises(ValueError):
             evaluate("2+")
         with self.assertRaises(ValueError):

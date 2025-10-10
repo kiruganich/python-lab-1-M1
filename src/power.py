@@ -30,10 +30,7 @@ def tokenize(expr: str) -> List[Token]:
             if i + 1 >= len(tokens):
                 raise ValueError(constants.ERROR_UNEXPECTED_END)
             next_token = tokens[i + 1]
-            if next_token == '(':
-                result.append(token)
-                i += 1
-            else:
+            if next_token not in ('+', '-', '('):
                 try:
                     num = float(next_token)
                     if token == '-':
@@ -42,6 +39,11 @@ def tokenize(expr: str) -> List[Token]:
                     i += 2
                 except ValueError:
                     raise ValueError(constants.ERROR_INVALID_NUMBER)
+            
+            else:
+                result.append(token)
+                i += 1
+
         elif token == '**':
             result.append('**')
             i += 1
