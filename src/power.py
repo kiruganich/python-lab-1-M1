@@ -5,13 +5,16 @@ from src import constants
 Token = Union[float, str]
 
 def tokenize(expr: str) -> List[Token]:
+    # Убираем пробелы (или можно оставить \s+ в регулярке)
     expr = expr.replace(' ', '')
     if not expr:
         raise ValueError(constants.ERROR_INVALID_TOKEN)
 
-    token_pattern = r'(\d+\.?\d*|\.\d+|[+\-*/%()]|\*\*)'
+    # ВАЖНО: сначала длинные операторы (**, //), потом короткие (+, -, *, /, %, (, ))
+    token_pattern = r'(\d+\.?\d*|\.\d+|\*\*|//|[+\-*/%()])'
     tokens = re.findall(token_pattern, expr)
- 
+
+    # Проверка: всё ли распозналось?
     if not tokens or ''.join(tokens) != expr:
         raise ValueError(constants.ERROR_INVALID_TOKEN)
 
@@ -19,6 +22,7 @@ def tokenize(expr: str) -> List[Token]:
     i = 0
     while i < len(tokens):
         token = tokens[i]
+        # Обработка унарного +/- 
         if token in '+-' and (i == 0 or tokens[i - 1] in '(+-*/%'):
             if i + 1 >= len(tokens):
                 raise ValueError(constants.ERROR_UNEXPECTED_END)
@@ -27,7 +31,7 @@ def tokenize(expr: str) -> List[Token]:
                 result.append(token)
                 i += 1
             else:
-                try: 
+                try:
                     num = float(next_token)
                     if token == '-':
                         num = -num
@@ -38,6 +42,9 @@ def tokenize(expr: str) -> List[Token]:
         elif token == '**':
             result.append('**')
             i += 1
+        elif token == '//':
+            result.append('//')
+            i += 1
         elif token in '()':
             result.append(token)
             i += 1
@@ -45,8 +52,9 @@ def tokenize(expr: str) -> List[Token]:
             result.append(token)
             i += 1
         else:
+            # Число
             try:
-                if '.' in token:
+                if '.' in token or 'e' in token.lower():
                     result.append(float(token))
                 else:
                     result.append(int(token))
@@ -142,3 +150,9 @@ class Parser:
             return result
         else:
             raise ValueError(constants.ERROR_INVALID_TOKEN)
+
+
+def evaluate(expression: str) -> float:
+    tokens = tokenize(expression)
+    parser = Parser(tokens)
+    return parser.parse()
