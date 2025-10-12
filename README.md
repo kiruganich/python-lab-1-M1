@@ -41,19 +41,25 @@
 ### Требования
 - Python 3.8+
 - Виртуальное окружение (рекомендуется)
-
+### Установка репозитория
+```bash
+pip install https://github.com/kiruganich/python-lab-1-M1.git
+cd python-lab-1-M1
+```
 ### Установка зависимостей
 ```bash
 # Создание и активация виртуального окружения
 python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# Linux/Mac:
-source .venv/bin/activate
+    # Windows:
+    .venv\Scripts\activate
+    # Linux/Mac:
+    source .venv/bin/activate
 
 # Установка зависимостей
 pip install -r requirements.txt
+```
 
-
-# Запуск калькулятора (из корневой папки):
+### Запуск калькулятора (из корневой папки):
+```bash
 python -m src.main
+```
