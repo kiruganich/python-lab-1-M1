@@ -33,6 +33,8 @@ def test_unary_operators():
 def test_power_operator():
     assert evaluate("2**3") == 8
     assert evaluate("2**3**2") == 512
+    with pytest.raises(ValueError, match="E6: Значение не определено"):
+        evaluate("0**0")
 
 
 # Деление нацело без остатка с целыми числами

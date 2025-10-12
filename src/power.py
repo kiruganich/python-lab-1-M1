@@ -71,6 +71,8 @@ def evaluate(expression: str):
         if pos < len(tokens) and peek() == "**":
             consume()
             right = pow_()
+            if left == 0 and right == 0:
+                raise ValueError(constants.ERROR_NOT_DEFINED)
             return left**right
         return left
 
