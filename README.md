@@ -36,7 +36,9 @@
 5. **Вывод**:  
     - Результат округляется до 2 знаков после запятой при печати.
 
- ## Инструкция по запуску
+### **Интересные тест-кейсы**
+- Скобки сбалансированы по количеству, но введены как )(
+- 5//2.0 - ошибка "// только для целых чисел", иначе проблема с тестами
 
 ### Требования
 - Python 3.8+
@@ -44,18 +46,26 @@
 ### Установка репозитория
 ```bash
 pip install https://github.com/kiruganich/python-lab-1-M1.git
+```
+```bash
 cd python-lab-1-M1
 ```
 ### Установка зависимостей
 ```bash
 # Создание и активация виртуального окружения
 python -m venv .venv
-    # Windows:
-    .venv\Scripts\activate
-    # Linux/Mac:
-    source .venv/bin/activate
-
+```
+```bash
+# Windows:
+.venv\Scripts\activate
+```
+```bash
+# Linux/Mac:
+source .venv/bin/activate
+```
+```bash
 # Установка зависимостей
+
 pip install -r requirements.txt
 ```
 
